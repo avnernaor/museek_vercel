@@ -324,7 +324,7 @@ export default function Share({ onPostAdded }) {
         <ShareTop>
           <ShareProfileImg src={currentUser.photoURL} alt={currentUser.displayName} />
           <ShareInput
-            placeholder={`What's on your mind, ${currentUser.displayName}?`}
+            placeholder={`What's on your, ${currentUser.displayName}?`}
             value={description}
             onChange={(e) => setDescription(e.target.value)}
           />
