@@ -7,13 +7,16 @@ import ReactionDialog from '../reactionDialog/ReactionDialog';
 import { useAuth } from '../../../firestore/AuthContext';
 import { collection, query, orderBy, onSnapshot } from 'firebase/firestore';
 import { db } from '../../../firebase-config';
+import ScrollUpButton from '../scrollUp/ScrollUpButton';
 
 const PostContainer = styled.div`
   width: 100%;
   border-radius: 10px;
-  box-shadow: 0px 0px 16px -8px rgba(0, 0, 0, 0.68);
+  box-shadow: 0 0 16px -8px rgba(0, 0, 0, 0.68);
   margin: 30px 0;
   background-color: #e0dcd2;
+  overflow-y: auto; /* Add scrolling */
+  max-height: 500px; /* Set a max height */
 `;
 
 const PostWrapper = styled.div`
@@ -196,9 +199,21 @@ function Post({ post, onFavoriteToggle, isFavorite }) {
 
   const formatDate = (date) => {
     if (date instanceof Date) {
-      return date.toLocaleString();
+      return date.toLocaleString(undefined, {
+        year: 'numeric',
+        month: 'numeric',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+      });
     } else if (typeof date === 'string') {
-      return new Date(date).toLocaleString();
+      return new Date(date).toLocaleString(undefined, {
+        year: 'numeric',
+        month: 'numeric',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+      });
     }
     return 'Unknown date';
   };
@@ -232,7 +247,7 @@ function Post({ post, onFavoriteToggle, isFavorite }) {
           <PostCenter>
             <PostText>{post.desc}</PostText>
             {post.pdf && (
-                <Button onClick={() => setPdfDialogOpen(true)} startIcon={<PictureAsPdf />}>
+                <Button  onClick={() => setPdfDialogOpen(true)} startIcon={<PictureAsPdf htmlColor="#6d4c41" />} sx={{color: '#6d4c41'}}>
                   View PDF
                 </Button>
             )}
@@ -254,7 +269,7 @@ function Post({ post, onFavoriteToggle, isFavorite }) {
           </PostCenter>
           {showComments && (
               <CommentSection>
-                <CommentButton onClick={() => setReactionDialogOpen(true)}>
+                <CommentButton sx={{color: '#6d4c41'}} onClick={() => setReactionDialogOpen(true)}>
                   Add Comment
                 </CommentButton>
                 <List>
@@ -270,7 +285,6 @@ function Post({ post, onFavoriteToggle, isFavorite }) {
                                 <Typography component="span" variant="body2" color="textPrimary">
                                   {comment.username}
                                 </Typography>
-                                {" — "}{comment.text}
                               </>
                             }
                         />
@@ -305,11 +319,12 @@ function Post({ post, onFavoriteToggle, isFavorite }) {
             )}
           </DialogContent>
           <DialogActions>
-            <Button onClick={() => setPdfDialogOpen(false)} color="primary">
+            <Button onClick={() => setPdfDialogOpen(false)} sx={{color: '#6d4c41'}}>
               Close
             </Button>
           </DialogActions>
         </Dialog>
+        <ScrollUpButton /> {/* Add ScrollUpButton */}
       </PostContainer>
   );
 }
