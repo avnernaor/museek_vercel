@@ -35,14 +35,14 @@ const PostTopLeft = styled.div`
 `;
 
 const PostUsername = styled.span`
-  font-size: 15px;
+  font-size: 20px;
   font-weight: 500;
   margin: 0 10px;
   color: #3e2723;
 `;
 
 const PostDate = styled.span`
-  font-size: 12px;
+  font-size: 14px;
   color: #6d4c41;
 `;
 
@@ -81,8 +81,8 @@ const StyledSlider = styled(Slider)({
 });
 
 const PostProfileImg = styled.img`
-  width: 32px;
-  height: 32px;
+  width: 70px;
+  height: 70px;
   border-radius: 50%;
   object-fit: cover;
 `;
